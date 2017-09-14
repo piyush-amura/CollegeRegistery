@@ -14,7 +14,7 @@ class Teacher < Person
   def self.all
     CSV.read('./teachers.csv')
   end
-  
+
   # attribute writer method for class variable count
   #
   # @param [Integer] val value that needs to be assigned to @@constructor
@@ -44,7 +44,7 @@ class Teacher < Person
   # @param [String] college_id id of the college where teacher belong
   # @param [Integer] courses courses information of the teacher
   #
-  def initialize(name, college_id,courses)
+  def initialize(name, college_id, courses = [])
     @@count += 1
     @college_id = college_id
     @course = courses

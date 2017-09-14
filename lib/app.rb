@@ -82,19 +82,81 @@ class App
     student.nil? ? not_found_message : student_search_result(student)
   end
 
-  # method that provides interface ti add the college in the registery
+  # method that provides interface to add the college in the registery
   #
   #
   # @return [Nil]
   #
   def add_college
-    puts '---- Add a college to the registery'
+    puts '---- Add a college to the registery ----'
     puts 'College-Name :-'
     college_name = gets.chomp
     college = College.new(college_name)
     CSV.open('./colleges.csv', 'a+') do |c|
       c << [college.id, college.name, college.courses]
     end
+    puts 'college added'
+  end
+
+  # method that provides interface to add the college in the registery
+  #
+  #
+  # @return [Nil]
+  #
+  def add_course
+    puts '---- Add a course to the registery ----'
+    puts 'Course-Name :-'
+    course_name = gets.chomp
+    course = Course.new(course_name)
+    CSV.open('./courses.csv', 'a+') do |c|
+      c << [course.id, course.name]
+    end
+    puts 'course added'
+  end
+
+  # method that provides interface to add the teachers in the registery
+  #
+  #
+  # @return [Nil]
+  #
+  def add_teacher
+    puts '---- Add a Teacher to the registery ----'
+    puts 'Name :-'
+    name = gets.chomp
+    puts 'College Name'
+    clg = gets.chomp
+    college_list = College.all
+    college = college_list.find { |c| c[1].include?(clg) }
+    teacher = Teacher.new(name, college[0])
+    CSV.open('./teachers.csv', 'a+') do |t|
+      t << [teacher.id, teacher.name, teacher.college_id, teacher.courses]
+    end
+    puts 'teacher added'
+  end
+  
+  # method that provides interface to add the teachers in the registery
+  #
+  #
+  # @return [Nil]
+  #
+  def add_student
+    puts '---- Add a Student to the registery ----'
+    puts 'Name :-'
+    name = gets.chomp
+    puts 'College Name'
+    clg = gets.chomp
+    college_list = College.all
+    college = college_list.find { |c| c[1].include?(clg) }
+    puts 'Course Name'
+    crse = gets.chomp
+    course_list = Course.all
+    course = course_list.find { |c| c[1].include?(crse) }
+    student = Student.new(name, college[0], course[0])
+    # p student
+    CSV.open('./students.csv', 'a+') do |t|
+      t << [student.id, student.name, student.college_id, student.course_id]
+    end
+    puts 'student added'
   end
 
   # method that display menu to the user
