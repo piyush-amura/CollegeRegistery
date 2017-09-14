@@ -13,8 +13,8 @@ class App
   # @return nil
   #
   def launch!
-    ch = 0
-    until ch == '4'
+    ch = nil
+    until ch == '8'
       puts '------ college info portal ------'
       menu
       ch = gets.chomp
@@ -33,7 +33,11 @@ class App
     when '1' then college_search
     when '2' then course_search
     when '3' then student_search
-    when '4' then puts 'adios'
+    when '4' then add_college
+    when '5' then add_course
+    when '6' then add_teacher
+    when '7' then add_student
+    when '8' then puts 'adios'
     else
       puts 'invalid input !!'
     end
@@ -56,7 +60,7 @@ class App
   #
   #
   # @return [Course] Object of Course class
-  # 
+  #
   def course_search
     course_list = Course.all
     puts 'Enter Course Name : '
@@ -69,13 +73,28 @@ class App
   #
   #
   # @return [Student] Object of Student class
-  # 
+  #
   def student_search
     student_list = Student.all
     puts 'Enter Student Name : '
     c = gets.chomp
     student = student_list.find { |s| s[1].include?(c) }
     student.nil? ? not_found_message : student_search_result(student)
+  end
+
+  # method that provides interface ti add the college in the registery
+  #
+  #
+  # @return [Nil]
+  #
+  def add_college
+    puts '---- Add a college to the registery'
+    puts 'College-Name :-'
+    college_name = gets.chomp
+    college = College.new(college_name)
+    CSV.open('./colleges.csv', 'a+') do |c|
+      c << [college.id, college.name, college.courses]
+    end
   end
 
   # method that display menu to the user
@@ -87,7 +106,11 @@ class App
     puts '1. Search College'
     puts '2. Search Courses'
     puts '3. Search Student'
-    puts '4. Quit'
+    puts '4. Add College'
+    puts '5. Add Course'
+    puts '6. Add Teacher'
+    puts '7. Add Student'
+    puts '8. Quit'
     puts 'Enter Your choice'
   end
 

@@ -4,18 +4,18 @@ require 'csv'
 # @author Piyush Wani <piyush.wani@amuratech.com>
 #
 class Course
-  @@count = 0
-  attr_accessor :id, :name
-
-  # constructor method for Course class instatntiation
+  # class method that reads data from csv file
   #
-  # @param [String] name name of the Course
   #
-  def initialize(name)
-    @@count += 1
-    @id = @@count
-    @name = name
+  # @return [Array] teachers object array
+  #
+  def self.all
+    CSV.read('./courses.csv')
   end
+
+  @@count = Course.all.size
+  
+  attr_accessor :id, :name
 
   # attribute writer method for class variable count
   #
@@ -35,13 +35,13 @@ class Course
   def self.count
     @@count
   end
-
-  # class method that reads data from csv file
+  # constructor method for Course class instatntiation
   #
+  # @param [String] name name of the Course
   #
-  # @return [Array] teachers object array
-  #
-  def self.all
-    CSV.read('./courses.csv')
+  def initialize(name)
+    @@count += 1
+    @id = @@count
+    @name = name
   end
 end

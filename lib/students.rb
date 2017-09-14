@@ -6,13 +6,13 @@ require 'csv'
 # @author Piyush Wani <piyush.wani@amuratech.com>
 #
 class Student < Person
-  attr_accessor :college_id, :course_id
-  @@count=0
-  def initialize(name, college_id,course_id)
-    @@count += 1
-    @college_id = college_id
-    @course_id  = course_id
-    super(@@count, name)
+  # class method that reads data from csv file
+  #
+  #
+  # @return [Array] teachers object array
+  #
+  def self.all
+    CSV.read('./students.csv')
   end
 
   # attribute writer method for class variable count
@@ -33,13 +33,21 @@ class Student < Person
   def self.count
     @@count
   end
+  
+  attr_accessor :college_id, :course_id
 
-  # class method that reads data from csv file
+  @@count = Student.all.size
+
+  # constructor for student class
   #
+  # @param [String]  name 			 name of the student
+  # @param [Integer] college_id  id of the college student is enrolled
+  # @param [Integer] course_id   id of the course student is enrolled in
   #
-  # @return [Array] teachers object array
-  #
-  def self.all
-    CSV.read('./students.csv')
+  def initialize(name, college_id, course_id)
+    @@count += 1
+    @college_id = college_id
+    @course_id  = course_id
+    super(@@count, name)
   end
 end
