@@ -15,27 +15,31 @@ class Student < Person
     super(@@count, name)
   end
 
+  # attribute writer method for class variable count
+  #
+  # @param [Integer] val value that needs to be assigned to @@constructor
+  #
+  # @return [Integer] @@count
+  #
   def self.count=(val)
     @@count = val
   end
 
+  # attribute reader method for class variable count
+  #
+  #
+  # @return [Integer] @@count
+  #
   def self.count
     @@count
   end
 
+  # class method that reads data from csv file
+  #
+  #
+  # @return [Array] teachers object array
+  #
   def self.all
-    CSV.read('../students.csv')
+    CSV.read('./students.csv')
   end
 end
-
-# students = []
-# students.push(Student.new('ayush', 1,1))
-# students.push(Student.new('ankush', 1,2))
-# students.push(Student.new('maanav', 1,3))
-# # p students
-# CSV.open('../students.csv', 'w') do |csv_object|
-#   students.each do |c|
-#     csv_object << [c.id, c.name, c.college_id , c.course_id]
-#   end
-# end
-# p Student.all

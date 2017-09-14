@@ -5,34 +5,49 @@ require 'csv'
 #
 class College
   @@count = 0
-  attr_accessor :id, :name,:courses,:students,:teachers
+  attr_accessor :id, :name, :courses, :students, :teachers
 
-  def initialize(name)
+  # constructor method for College class
+  #
+  # @param [String] name     name of the college
+  # @param [Array]  courses  Array of the course ids from Course class
+  # @param [Array]  teachers Array of the teacher ids from Teacher class
+  # @param [Array]  students Array of the student ids from Student class
+  #
+  def initialize(name, courses = nil, teachers = nil, students = nil)
     @@count += 1
     @id = @@count
     @name = name
-    @courses  = [1,2,3]
-    @students = [1,2,3]
-    @teachers = [1,2,3]
+    @courses  = courses
+    @students = teachers
+    @teachers = students
   end
 
+  # attribute writer method for class variable count
+  #
+  # @param [Integer] val value that needs to be assigned to @@constructor
+  #
+  # @return [Integer] @@count
+  #
   def self.count=(val)
     @@count = val
   end
 
+  # attribute reader method for class variable count
+  #
+  #
+  # @return [Integer] @@count
+  #
   def self.count
     @@count
   end
-
+  
+  # class method that reads data from csv file
+  #
+  #
+  # @return [Array] teachers object array
+  #
   def self.all
-    CSV.read('../colleges.csv')
+    CSV.read('./colleges.csv')
   end
 end
-# colleges = []
-# colleges.push(College.new('Fergusson College'))
-# CSV.open('../colleges.csv', 'w') do |csv_object|
-#   colleges.each do |c|
-#     csv_object << [c.id, c.name, c.courses, c.teachers , c.students]
-#   end
-# end
-# p College.all
